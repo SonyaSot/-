@@ -54,8 +54,19 @@
   <script>
     document.getElementById('requestForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      alert('Спасибо! Мы свяжемся с вами в ближайшее время.');
-      this.reset();
+      const name = this.querySelector('[placeholder="Ваше имя"]').value;
+      const phone = this.querySelector('[placeholder="Номер телефона"]').value;
+      
+      // Отправка в Telegram
+      const token = 'YOUR_BOT_TOKEN'; 
+      const chatId = 'YOUR_CHAT_ID';  
+      const message = `Заявка с сайта:\nИмя: ${name}\nТелефон: ${phone}`;
+      
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text: message })
+      }).then(() => alert('Спасибо! Мы скоро свяжемся с вами.'));
     });
   </script>
 </body>
